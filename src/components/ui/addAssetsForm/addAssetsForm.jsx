@@ -1,11 +1,28 @@
 import React, {useState} from 'react';
-import {Flex, Select, Space, Typography, DatePicker, Divider, Form, Input, Button, InputNumber} from "antd";
+import {Flex, Select, Space, Typography, DatePicker, Divider, Form, Result, Button, InputNumber} from "antd";
 import {useCrypto} from "../../../hooks/useCrypto.js";
+import {CoinInfo} from "../../layout/coinInfo/coinInfo.jsx";
 
 export const AddAssetsForm = () => {
     const [form] = Form.useForm()
     const {crypto, addAsset} = useCrypto()
     const [coin, setCoin] = useState(null)
+    const [submitted, setSubmitted] = useState(false)
+
+    if (submitted) {
+        return (
+            <Result
+                status="success"
+                title="New Asset Added"
+                subTitle={`Added ${assetRef.current.amount} of ${coin.name} by price ${assetRef.current.price}`}
+                extra={[
+                    <Button type="primary" key="console" onClick={onClose}>
+                        Close
+                    </Button>,
+                ]}
+            />
+        )
+    }
 
     const validateMessages = {
         required: '${label} is required!',
@@ -17,6 +34,7 @@ export const AddAssetsForm = () => {
         },
     }
 
+
     if (!coin) {
         return (
             <Select
@@ -24,16 +42,19 @@ export const AddAssetsForm = () => {
                     width: '100%',
                 }}
                 onSelect={(v) => setCoin(crypto.find((c) => c.id === v))}
-                placeholder={'Select coin'}
-                options={crypto.map(coin => ({
+                placeholder="Select coin"
+                options={crypto.map((coin) => ({
                     label: coin.name,
                     value: coin.id,
-                    icon: coin.icon
-
+                    icon: coin.icon,
                 }))}
                 optionRender={(option) => (
                     <Space>
-                        <img style={{width: '20px', height: '20px'}} src={option.data.icon} alt={option.data.label}/>
+                        <img
+                            style={{width: 20}}
+                            src={option.data.icon}
+                            alt={option.data.label}
+                        />{' '}
                         {option.data.label}
                     </Space>
                 )}
@@ -42,20 +63,28 @@ export const AddAssetsForm = () => {
     }
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        const newAsset = {
+            id: coin.id,
+            amount: values.amount,
+            price: values.price,
+            date: values.date?.$d ?? new Date(),
+        }
+        assetRef.current = newAsset
+        setSubmitted(true)
+        addAsset(newAsset)
     };
 
-    function handleAmountChange(value) {
+    const handleAmountChange = (value) => {
         const price = form.getFieldValue('price')
-        form.setFieldValue({
-            total: +(value * price).toFixed(2)
+        form.setFieldsValue({
+            total: +(value * price).toFixed(2),
         })
     }
 
-    function handlePriceChange(value) {
+    const handlePriceChange = (value) => {
         const amount = form.getFieldValue('amount')
-        form.setFieldValue({
-            total: +(value * amount).toFixed(2)
+        form.setFieldsValue({
+            total: +(amount * value).toFixed(2),
         })
     }
 
@@ -73,18 +102,13 @@ export const AddAssetsForm = () => {
                 maxWidth: 600,
             }}
             initialValues={{
-                price: coin.price.toFixed(2)
+                price: +coin.price.toFixed(2)
             }}
             onFinish={onFinish}
             validateMessages={validateMessages}
 
         >
-            <Flex align='center'>
-                <img src={coin.icon} alt={coin.name} style={{width: '30px', marginRight: '10px'}}/>
-                <Typography.Title level={2} style={{margin: 0}}>
-                    {coin.name}
-                </Typography.Title>
-            </Flex>
+            <CoinInfo coin={coin}/>
             <Divider/>
 
             <Form.Item
