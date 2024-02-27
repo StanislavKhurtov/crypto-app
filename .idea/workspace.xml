@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00bc26ef-b84e-4e1e-b4fe-a85ea0d08b03" name="Changes" comment="feat: add files coinInfo">
+    <list default="true" id="00bc26ef-b84e-4e1e-b4fe-a85ea0d08b03" name="Changes" comment="feat: change file">
+      <change afterPath="$PROJECT_DIR$/src/components/ui/assetsTable/assetsTable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/assetsTable/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/coinInfoModal/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/portfolioChart/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/portfolioChart/portfolioChart.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/addAssetsForm/addAssetsForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/addAssetsForm/addAssetsForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/appContent/appContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/appContent/appContent.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +87,8 @@
       <workItem from="1708961406357" duration="1941000" />
       <workItem from="1709018691732" duration="501000" />
       <workItem from="1709019562756" duration="317000" />
-      <workItem from="1709020637961" duration="5743000" />
+      <workItem from="1709020637961" duration="6890000" />
+      <workItem from="1709028022723" duration="1055000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add files">
       <option name="closed" value="true" />
@@ -116,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709023964088</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: change file">
+      <option name="closed" value="true" />
+      <created>1709027099694</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1709027099694</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +139,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: add files" />
     <MESSAGE value="feat: add files coinInfo" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add files coinInfo" />
+    <MESSAGE value="feat: change file" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: change file" />
   </component>
 </project>
