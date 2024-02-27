@@ -1,13 +1,35 @@
-import React, {useState} from 'react';
-import {Flex, Select, Space, Typography, DatePicker, Divider, Form, Result, Button, InputNumber} from "antd";
+import { useState, useRef } from 'react'
+import {
+    Select,
+    Space,
+    Typography,
+    Flex,
+    Divider,
+    Form,
+    InputNumber,
+    Button,
+    DatePicker,
+    Result,
+} from "antd";
 import {useCrypto} from "../../../hooks/useCrypto.js";
 import {CoinInfo} from "../../layout/coinInfo/coinInfo.jsx";
 
-export const AddAssetsForm = () => {
+const validateMessages = {
+    required: '${label} is required!',
+    types: {
+        number: '${label} in not valid number',
+    },
+    number: {
+        range: '${label} must be between ${min} and ${max}',
+    },
+}
+
+export const AddAssetsForm = ({onClose}) => {
     const [form] = Form.useForm()
     const {crypto, addAsset} = useCrypto()
     const [coin, setCoin] = useState(null)
     const [submitted, setSubmitted] = useState(false)
+    const assetRef = useRef()
 
     if (submitted) {
         return (
@@ -23,17 +45,6 @@ export const AddAssetsForm = () => {
             />
         )
     }
-
-    const validateMessages = {
-        required: '${label} is required!',
-        types: {
-            number: '${label} in not valid number',
-        },
-        number: {
-            range: '${label} must be between ${min} and ${max}',
-        },
-    }
-
 
     if (!coin) {
         return (
@@ -62,7 +73,7 @@ export const AddAssetsForm = () => {
         )
     }
 
-    const onFinish = (values) => {
+    function onFinish(values) {
         const newAsset = {
             id: coin.id,
             amount: values.amount,
@@ -72,16 +83,16 @@ export const AddAssetsForm = () => {
         assetRef.current = newAsset
         setSubmitted(true)
         addAsset(newAsset)
-    };
+    }
 
-    const handleAmountChange = (value) => {
+    function handleAmountChange(value) {
         const price = form.getFieldValue('price')
         form.setFieldsValue({
             total: +(value * price).toFixed(2),
         })
     }
 
-    const handlePriceChange = (value) => {
+    function handlePriceChange(value) {
         const amount = form.getFieldValue('amount')
         form.setFieldsValue({
             total: +(amount * value).toFixed(2),
@@ -102,11 +113,10 @@ export const AddAssetsForm = () => {
                 maxWidth: 600,
             }}
             initialValues={{
-                price: +coin.price.toFixed(2)
+                price: +coin.price.toFixed(2),
             }}
             onFinish={onFinish}
             validateMessages={validateMessages}
-
         >
             <CoinInfo coin={coin}/>
             <Divider/>
@@ -122,28 +132,22 @@ export const AddAssetsForm = () => {
                     },
                 ]}
             >
-                <InputNumber onChange={handleAmountChange} placeholder={'Enter coin amount'} style={{width: '100%'}}/>
+                <InputNumber
+                    placeholder="Enter coin amount"
+                    onChange={handleAmountChange}
+                    style={{width: '100%'}}
+                />
             </Form.Item>
 
-            <Form.Item
-                label="Price"
-                name="price"
-            >
+            <Form.Item label="Price" name="price">
                 <InputNumber onChange={handlePriceChange} style={{width: '100%'}}/>
             </Form.Item>
 
-            <Form.Item
-                label="Date & Time"
-                name="date"
-            >
+            <Form.Item label="Date & Time" name="date">
                 <DatePicker showTime/>
             </Form.Item>
 
-
-            <Form.Item
-                label="Total"
-                name="total"
-            >
+            <Form.Item label="Total" name="total">
                 <InputNumber disabled style={{width: '100%'}}/>
             </Form.Item>
 
